@@ -9,7 +9,7 @@ const businesses = [
     addressZipCode: "56839",
     addressStateCode: "WI",
     addressFullStreet: "8417 Franklin Court Tunnel",
-    addressCity: "Mouthcard"
+    addressCity: "Mouthcard",
   },
   {
     purchasingAgent: { nameLast: "Steuber", nameFirst: "Kamron" },
@@ -20,7 +20,7 @@ const businesses = [
     addressZipCode: "09705",
     addressStateCode: "NY",
     addressFullStreet: "2889 Fawn Court Garden",
-    addressCity: "Fellsmere"
+    addressCity: "Fellsmere",
   },
   {
     purchasingAgent: { nameLast: "Gutkowski", nameFirst: "Kaylee" },
@@ -31,7 +31,7 @@ const businesses = [
     addressZipCode: "49376",
     addressStateCode: "ME",
     addressFullStreet: "5734 Maple Avenue Throughway",
-    addressCity: "Little Genesee"
+    addressCity: "Little Genesee",
   },
   {
     purchasingAgent: { nameLast: "Crona", nameFirst: "Lauren" },
@@ -42,7 +42,7 @@ const businesses = [
     addressZipCode: "53326",
     addressStateCode: "IL",
     addressFullStreet: "5755 Hillside Drive Crossroad",
-    addressCity: "Norval"
+    addressCity: "Norval",
   },
   {
     purchasingAgent: { nameLast: "Krajcik", nameFirst: "Elvera" },
@@ -53,7 +53,7 @@ const businesses = [
     addressZipCode: "67071",
     addressStateCode: "KS",
     addressFullStreet: "4826 Arch Street Lights",
-    addressCity: "Newburyport"
+    addressCity: "Newburyport",
   },
   {
     purchasingAgent: { nameLast: "Kling", nameFirst: "Ellie" },
@@ -64,7 +64,7 @@ const businesses = [
     addressZipCode: "98842",
     addressStateCode: "WV",
     addressFullStreet: "9767 Cedar Court Corner",
-    addressCity: "Prince George"
+    addressCity: "Prince George",
   },
   {
     purchasingAgent: { nameLast: "Robel", nameFirst: "Otilia" },
@@ -75,7 +75,7 @@ const businesses = [
     addressZipCode: "72993",
     addressStateCode: "FL",
     addressFullStreet: "9954 Buckingham Drive Mountains",
-    addressCity: "Vesper"
+    addressCity: "Vesper",
   },
   {
     purchasingAgent: { nameLast: "Gusikowski", nameFirst: "Karolann" },
@@ -86,7 +86,7 @@ const businesses = [
     addressZipCode: "59860",
     addressStateCode: "MT",
     addressFullStreet: "4151 Orange Street Extension",
-    addressCity: "Little Rock Air Force Base"
+    addressCity: "Little Rock Air Force Base",
   },
   {
     purchasingAgent: { nameLast: "Hartmann", nameFirst: "Zena" },
@@ -97,7 +97,7 @@ const businesses = [
     addressZipCode: "85156",
     addressStateCode: "NY",
     addressFullStreet: "4765 Fairview Avenue Locks",
-    addressCity: "Dennisville"
+    addressCity: "Dennisville",
   },
   {
     purchasingAgent: { nameLast: "Torphy", nameFirst: "Celia" },
@@ -108,29 +108,81 @@ const businesses = [
     addressZipCode: "96673",
     addressStateCode: "MD",
     addressFullStreet: "7157 Hudson Street Ford",
-    addressCity: "Watrous"
-  }
+    addressCity: "Watrous",
+  },
 ];
 // end arrays
 
 // start functions
-const outEl = document.querySelector("#output")
-outEl.innerHTML = "<h1>Active Businesses</h1>"
+const nav = document.querySelector("#nav");
+nav.innerHTML = `<div class="topnav">
+    <a class="active" href="index.html">Home</a>
+    <a href="ny.html">New York</a>
+  </div>`;
 
-businesses.forEach(business => {
-  outEl.innerHTML += `
-    <h2>${business.companyName}</h2>
-    <section>
-      ${business.addressFullStreet}
-    </section>
-  `
-  outEl.innerHTML += "<hr/>"
-});
 // end functions
+// start methods
+// forEach() method
+const home = () => {
+  if (document.title === "Home") {
+    const outEl = document.querySelector("#output");
+    outEl.innerHTML = "<h1>Active Businesses</h1>";
+
+    businesses.forEach((business) => {
+      outEl.innerHTML += `
+        <h2>${business.companyName}</h2>
+        <section>
+          ${business.addressFullStreet}
+        </section>
+        <section>
+          ${business.addressCity}, ${business["addressStateCode"]} ${business["addressZipCode"]}
+        </section>
+      `;
+      outEl.innerHTML += "<hr/>";
+    });
+  }
+};
+
+// filter() method
+// Array to contain all the New York businesses
+const ny = () => {
+  if (document.title == 'New York') {
+    const newYorkBusinesses = businesses.filter((business) => {
+      let inNewYork = false;
+
+      if (business.addressStateCode === "NY") {
+        inNewYork = true;
+      }
+
+      return inNewYork;
+    });
+
+    const outEl = document.querySelector("#ny");
+      outEl.innerHTML = "<h1>New York Businesses</h1>";
+
+      newYorkBusinesses.forEach((business) => {
+        outEl.innerHTML += `
+          <h2>${business.companyName}</h2>
+          <section>
+            ${business.addressFullStreet}
+          </section>
+          <section>
+            ${business.addressCity}, ${business["addressStateCode"]} ${business["addressZipCode"]}
+          </section>
+        `;
+        outEl.innerHTML += "<hr/>";
+      });
+
+    
+  };
+};
+// end methods
 
 // create init
 const init = () => {
-outEl;
+  nav;
+  home();
+  ny();
 };
 
 init();
