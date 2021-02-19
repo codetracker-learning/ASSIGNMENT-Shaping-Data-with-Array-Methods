@@ -118,9 +118,10 @@ const nav = document.querySelector("#nav");
 nav.innerHTML = `<div class="topnav">
     <a class="active" href="index.html">Home</a>
     <a href="ny.html">New York</a>
+    <a href="manufacturing.html">Manufacturing</a>
   </div>`;
-
 // end functions
+
 // start methods
 // forEach() method
 const home = () => {
@@ -172,8 +173,34 @@ const ny = () => {
         `;
         outEl.innerHTML += "<hr/>";
       });
+  };
+};
 
-    
+// Array to contain all manufacturing businesses
+const manufacturing = () => {
+  if (document.title == 'Manufacturing') {
+    const manufacturingBusinesses = businesses.filter((business) => {
+      let manuBiz = false;
+      if (business.companyIndustry === "Manufacturing") {
+        manuBiz = true;
+      }
+      return manuBiz;
+    });
+
+    const outEl = document.querySelector("#manufacturing");
+      outEl.innerHTML = "<h1>Manufacturing Businesses</h1>";
+      manufacturingBusinesses.forEach((business) => {
+        outEl.innerHTML += `
+          <h2>${business.companyName}</h2>
+          <section>
+            ${business.addressFullStreet}
+          </section>
+          <section>
+            ${business.addressCity}, ${business["addressStateCode"]} ${business["addressZipCode"]}
+          </section>
+        `;
+        outEl.innerHTML += "<hr/>";
+      });
   };
 };
 // end methods
@@ -183,6 +210,7 @@ const init = () => {
   nav;
   home();
   ny();
+  manufacturing();
 };
 
 init();
