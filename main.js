@@ -119,6 +119,7 @@ nav.innerHTML = `<div class="topnav">
     <a class="active" href="index.html">Home</a>
     <a href="ny.html">New York</a>
     <a href="manufacturing.html">Manufacturing</a>
+    <a href="agents.html">Purchasing Agents</a>
   </div>`;
 // end functions
 
@@ -203,6 +204,30 @@ const manufacturing = () => {
       });
   };
 };
+
+// purchasing agents
+const agents = () => {
+  if (document.title == 'Purchasing Agents') {
+    const outEl = document.querySelector("#agents");
+    outEl.innerHTML += "<h1>Purchasing Agents</h1>";
+
+    /*
+        Using map(), you extract the purchasing agent object
+        from each business and store it in a new array
+    */
+    const agents = businesses.map(business => {
+        return business.purchasingAgent
+    });
+
+    console.table(agents);
+
+    agents.forEach(agent => {
+      outEl.innerHTML += `<h2>${agent.nameFirst} ${agent.nameLast}</h2>`;
+      outEl.innerHTML += "<hr/>";
+    });
+  };
+};
+
 // end methods
 
 // create init
@@ -211,6 +236,7 @@ const init = () => {
   home();
   ny();
   manufacturing();
+  agents();
 };
 
 init();
