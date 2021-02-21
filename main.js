@@ -117,15 +117,58 @@ const businesses = [
 // };
 
 const outEl = document.querySelector('#output');
-outEl.innerHTML = `<h1>Active Businesses</h1>`;
+// outEl.innerHTML = `<h1>Active Businesses</h1>`;
 
-businesses.forEach(business => {
-  outEl.innerHTML += `<h2>${business.companyName}</h2>
-                      <sectio>
-                        ${business.addressFullStreet}
-                      </sectio>
+// businesses.forEach(business => {
+//   outEl.innerHTML += `<h2>${business.companyName}</h2>
+//                       <sectio>
+//                         ${business.addressFullStreet}
+//                       </sectio>
+//                       <section>
+//                         ${business.addressCity}, ${business['addressStateCode']} ${business['addressZipCode']}
+//                       </section>`
+//   outEl.innerHTML += '<hr/>';
+// });
+
+// const newYorkBusinesses = businesses.filter(business => {
+//   let inNewYork = false;
+
+//   if (business.addressStateCode === "NY") {
+//     inNewYork = true;
+//   }
+//   return inNewYork;
+// })
+
+// outEl.innerHTML = `<h1>New York Businesses</h1>`
+
+// newYorkBusinesses.forEach(newYorkBusiness => {
+//   outEl.innerHTML += `<h2>${newYorkBusiness.companyName}</h2>
+//                       <section>
+//                         ${newYorkBusiness.addressFullStreet}
+//                       </section>
+//                       <section>
+//                         ${newYorkBusiness.addressCity}, ${newYorkBusiness.addressStateCode} ${newYorkBusiness.addressZipCode}
+//                       </section>`
+//   outEl.innerHTML += `<hr/>`
+// });
+
+const manufacturingBusinesses = businesses.filter(business => {
+  let manufacturing = false;
+  if (business.companyIndustry === 'Manufacturing') {
+    manufacturing = true;
+  }
+  return manufacturing;
+});
+
+outEl.innerHTML = `<h1>Manufacturing Business</h1>`
+
+manufacturingBusinesses.forEach(manufacturingBusiness => {
+  outEl.innerHTML += `<h2>${manufacturingBusiness.companyName}</h2>
                       <section>
-                        ${business.addressCity} ${business['addressStateCode']} ${business['addressZipCode']}
+                        ${manufacturingBusiness.addressFullStreet}
+                      </section>
+                      <section>
+                        ${manufacturingBusiness.addressCity}, ${manufacturingBusiness.addressStateCode} ${manufacturingBusiness.addressZipCode}
                       </section>`
-  outEl.innerHTML += '<hr/>';
+  outEl.innerHTML += `<hr/>`
 });
