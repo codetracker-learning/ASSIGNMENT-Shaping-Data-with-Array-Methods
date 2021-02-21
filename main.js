@@ -152,23 +152,47 @@ const outEl = document.querySelector('#output');
 //   outEl.innerHTML += `<hr/>`
 // });
 
-const manufacturingBusinesses = businesses.filter(business => {
-  let manufacturing = false;
-  if (business.companyIndustry === 'Manufacturing') {
-    manufacturing = true;
+// const manufacturingBusinesses = businesses.filter(business => {
+//   let manufacturing = false;
+//   if (business.companyIndustry === 'Manufacturing') {
+//     manufacturing = true;
+//   }
+//   return manufacturing;
+// });
+
+// outEl.innerHTML = `<h1>Manufacturing Business</h1>`
+
+// manufacturingBusinesses.forEach(manufacturingBusiness => {
+//   outEl.innerHTML += `<h2>${manufacturingBusiness.companyName}</h2>
+//                       <section>
+//                         ${manufacturingBusiness.addressFullStreet}
+//                       </section>
+//                       <section>
+//                         ${manufacturingBusiness.addressCity}, ${manufacturingBusiness.addressStateCode} ${manufacturingBusiness.addressZipCode}
+//                       </section>`
+//   outEl.innerHTML += `<hr/>`
+// });
+
+outEl.innerHTML += `<h1>Purchasing Agents</h1>`;
+
+const agents = businesses.map(business => {
+  const fullName = `${business.purchasingAgent.nameFirst} ${business.purchasingAgent.nameLast}`;
+  const company = `${business.companyName}`;
+  const phoneNumber = `${business.phoneWork}`;
+  const obj = {
+    fullName,
+    company,
+    phoneNumber,
   }
-  return manufacturing;
+  return obj;
 });
 
-outEl.innerHTML = `<h1>Manufacturing Business</h1>`
+console.table(agents);
 
-manufacturingBusinesses.forEach(manufacturingBusiness => {
-  outEl.innerHTML += `<h2>${manufacturingBusiness.companyName}</h2>
-                      <section>
-                        ${manufacturingBusiness.addressFullStreet}
-                      </section>
-                      <section>
-                        ${manufacturingBusiness.addressCity}, ${manufacturingBusiness.addressStateCode} ${manufacturingBusiness.addressZipCode}
-                      </section>`
-  outEl.innerHTML += `<hr/>`
+agents.forEach(agent => {
+  outEl.innerHTML += `<h2>${agent.fullName}</h2>
+                      <h3>${agent.company}</h3>
+                      <h3>${agent.phoneNumber}</h3>`;
+
+  outEl.innerHTML += `<hr/>`;
 });
