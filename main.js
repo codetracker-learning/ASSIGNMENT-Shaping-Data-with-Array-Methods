@@ -110,34 +110,72 @@ const businesses = [
       addressCity: "Watrous"
     }
   ];
-  const renderToDom = (divId, textToRender) => {
-      const selectedDiv = document.querySelector(divId);
-       selectedDiv.innerHTML = textToRender;
-  }
+//   const renderToDom = (divId, textToRender) => {
+//       const selectedDiv = document.querySelector(divId);
+//        selectedDiv.innerHTML = textToRender;
+//   }
+  const outEl = document.querySelector("#output")
+outEl.innerHTML = "<h1>Active Businesses</h1>"
 
 //add businesses list to the DOM
-  const businessesList = (array) => {
+businesses.forEach(business => {
+    outEl.innerHTML += `
+      <h2>${business.companyName}</h2>
+      <section>
+        ${business.addressFullStreet}
+      </section>
+      <section>
+      ${business.addressCity}, ${business['addressStateCode']}, ${business['addressZipCode']}
+    </section>
+    `;
+    outEl.innerHTML += "<hr/>"
+  });
+       
+     // Array to contain all the New York businesses
+const newYorkBusinesses = businesses.filter(business => {
+    let inNewYork = false
+  
+    if (business.addressStateCode === "NY") {
+        inNewYork = true
+    }
+    return inNewYork
+  });
 
-      let domString = ""
-      array.forEach((business) => {
-          domString += `
-          <h2>${business.companyName}</h2>
-          <section>
-            <h3> ${business.addressFullStreet} </h3>
-            <section>
-            <h3> ${business.addressStateCode} </h3>
-            <section>
-            <h3> ${businesses['addressZipCode']} </h3>
-          </section>
-          `;
-      });
+  outEl.innerHTML += "<h2> NewYork Businesses </h2>"
+  //rendering only businesses in NY to the DOM
 
-          renderToDom('#output' , domString)
-      }
+  newYorkBusinesses.forEach((business) => {
+      outEl.innerHTML += `<h2>${business['companyName']} </h2>`;
+      outEl.innerHTML += `<h3>${business['addressStateCode']} </h3>`;
+      outEl.innerHTML += "<hr/>"; 
+  })
+
+//filtering all businesses in the manufacturing industry
+const manufacturingBusinesses = businesses.filter(business => {
+    let manufacturing = false
+    if (business.companyIndustry === "Manufacturing") {
+        manufacturing = true
+    }
+    
+    return manufacturing 
+});
+
+outEl.innerHTML += "<h2>Manufacturing Businesses</h2>"
+
+//redering all businesses in manufaturing industry to the DOM
+manufacturingBusinesses.forEach((business) => {
+    outEl.innerHTML += `<h2> ${business['companyName']} </h2>`;
+    outEl.innerHTML += `<h3> ${business['companyIndustry']} </h3>`;
+    outEl.innerHTML += '<hr/>';
+});
     
        const init = () => {
-           businessesList(businesses);
+          businessesList(businesses);
        };
 
        init();
+       
+
+  
+
     
