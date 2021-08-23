@@ -110,3 +110,5 @@ const businesses = [
       addressCity: "Watrous"
     }
   ];  
+
+  export default businesses;
