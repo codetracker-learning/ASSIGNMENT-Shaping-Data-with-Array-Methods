@@ -1,7 +1,8 @@
-import showCards from './components/bizCards.js';
+import { showCards, showNYBiz } from './components/bizCards.js';
 
 const init = () => {
 showCards();
+showNYBiz();
 };
 
 init();
