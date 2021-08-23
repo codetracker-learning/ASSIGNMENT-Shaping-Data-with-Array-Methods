@@ -9,6 +9,15 @@ const showCards = () => {
         <section>
           ${business.addressFullStreet}
         </section>
+        <section>
+          ${business.addressCity}
+        </section>
+        <section>
+          ${business['addressStateCode']}
+        </section>
+        <section>
+          ${business['addressZipCode']}
+        </section>
         `
     });
     renderToDom('#bizContainer', domString)
