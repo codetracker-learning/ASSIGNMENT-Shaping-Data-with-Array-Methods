@@ -110,16 +110,12 @@ const businesses = [
       addressCity: "Watrous"
     }
   ];
-//   const renderToDom = (divId, textToRender) => {
-//       const selectedDiv = document.querySelector(divId);
-//        selectedDiv.innerHTML = textToRender;
-//   }
+
   const outEl = document.querySelector("#output")
 outEl.innerHTML = "<h1>Active Businesses</h1>"
 
-
 //add businesses list to the DOM
-businesses.forEach(business => {
+const businessesBuilder = businesses.forEach(business => {
     outEl.innerHTML += `
       <h2>${business.companyName}</h2>
       <section>
@@ -185,8 +181,60 @@ const agentObj = businesses.map(business => {
     `;
     outEl.innerHTML += "<hr/>"
   }); 
-       const init = () => {
-          businessesList(businesses);
+
+  // find method
+  const candies = [
+    {
+        name: "Lollipop",
+        price: 2.99
+    },
+    {
+        name: "Tootsie Roll",
+        price: 1.49
+    },
+    {
+        name: "Sugar Daddy",
+        price: 2.49
+    }
+]
+
+const firstCheapCandy = candies.find(candy => candy.price < 2.00)
+
+console.log(firstCheapCandy)
+> { name: "Tootsie Roll", price: 1.49 }
+
+    //find/search method
+    const companySearch = document.querySelector('#companySearch')
+    
+    companySearch.addEventListener('keyup',(event)=> {
+        const searchString = event.target.value.toLowerCase();
+        const filterBusinesses = businesses.find(business=>
+        business.companyName.toLowerCase().includes(searchString)
+            );
+            outEl.innerHTML = `
+            <h2>
+            ${filterBusinesses.companyName}
+            </h2>
+            <section>
+            ${filterBusinesses.addressFullStreet}
+            </section>
+            <section>
+            ${filterBusinesses.addressCity}
+            ${filterBusinesses.addressStateCode}
+            ${filterBusinesses.addressZipCode}
+            </section>
+            `;
+        });
+
+       
+   
+
+
+    
+
+
+const init = () => {
+          
        };
 
        init();
