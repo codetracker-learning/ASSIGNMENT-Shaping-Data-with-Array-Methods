@@ -117,6 +117,7 @@ const businesses = [
   const outEl = document.querySelector("#output")
 outEl.innerHTML = "<h1>Active Businesses</h1>"
 
+
 //add businesses list to the DOM
 businesses.forEach(business => {
     outEl.innerHTML += `
@@ -168,7 +169,22 @@ manufacturingBusinesses.forEach((business) => {
     outEl.innerHTML += `<h3> ${business['companyIndustry']} </h3>`;
     outEl.innerHTML += '<hr/>';
 });
-    
+
+//Mapped agents information and render it to the DOM
+
+outEl.innerHTML += "<h1>Purchasing Agents</h1>";
+const agentObj = businesses.map(business => {
+     outEl.innerHTML += `
+      <h2>${business.purchasingAgent.nameFirst + " " + business.purchasingAgent.nameLast}</h2>
+      <section>
+        ${business.companyName}
+      </section>
+      <section>
+      ${business['phoneWork']}
+    </section>
+    `;
+    outEl.innerHTML += "<hr/>"
+  }); 
        const init = () => {
           businessesList(businesses);
        };
