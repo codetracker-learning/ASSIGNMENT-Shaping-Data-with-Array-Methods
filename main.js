@@ -112,10 +112,12 @@ const businesses = [
   ];
 
 
-const outEl = document.querySelector("#output")
+const outEl = document.querySelector("#output");
+const filEl = document.querySelector("#filter");
+const mapEl = document.querySelector("#map");
+const findEl = document.querySelector("#find");
+
 outEl.innerHTML = "<h1>Active Businesses</h1>"
-
-
 businesses.forEach(business => {
     const zipCode = business['addressZipCode'];
   outEl.innerHTML += `
@@ -128,13 +130,126 @@ businesses.forEach(business => {
   outEl.innerHTML += "<hr/>"
 });
 
-// Array to contain all the New York businesses
-const newYorkBusinesses = businesses.filter(business => {
-    let inNewYork = false
+
+const manuBusiness = businesses.filter(business => {
+      let isManufacturing = false;
+    if (business.companyIndustry === "Manufacturing"){
+        isManufacturing = true;
+      }
   
-    if (business.addressStateCode === "NY") {
-        inNewYork = true
-    }
-  
-    return inNewYork
+      return isManufacturing;
   });
+
+filEl.innerHTML = "<h1>Manufacturing Businesses</h1>"
+  manuBusiness.forEach(business => {
+      const zipCode = business['addressZipCode'];
+    filEl.innerHTML += `
+      <h2>${business.companyName}</h2>
+      <section>
+        ${business.addressFullStreet}
+      </section>
+      <p>${business.addressCity}, ${business['addressStateCode']}, ${zipCode}</p>
+   `
+    filEl.innerHTML += "<hr/>"
+  });
+
+mapEl.innerHTML += "<h1>Purchasing Agents</h1>"
+const agentObj = businesses.map(business => (
+    {
+      'fullName': business.purchasingAgent, 
+      'company': business.companyName, 
+      'phoneNumber': business.phoneWork
+    }
+    
+  ));
+
+agentObj.forEach(agent => {
+mapEl.innerHTML += `<h2>${agent.fullName.nameFirst} ${agent.fullName.nameLast}</h2>
+<h3>${agent.company}</h3>
+<h4>${agent.phoneNumber}</h4>`;
+mapEl.innerHTML += "<hr/>";
+});
+
+//find
+document
+    .querySelector("#companySearch")
+    .addEventListener("keypress", keyPressEvent => {
+        if (keyPressEvent.charCode === 13) {
+            /* WHEN  USER PRESSES ENTER, FIND MATCHING BUSINESS */
+            const foundBusiness = businesses.find(
+                business =>
+                    business.companyName.includes(keyPressEvent.target.value)
+            );
+
+            outEl.innerHTML = `
+                <h2>
+                ${foundBusiness.companyName}
+                </h2>
+                <section>
+                ${foundBusiness.addressFullStreet}
+
+                </section>
+                <section>
+                ${foundBusiness.addressCity},
+                ${foundBusiness.addressStateCode}
+                ${foundBusiness.addressZipCode}
+                </section>
+            `;
+        }
+    });
+
+mapEl.innerHTML += "<h1>Search Agents</h1>"
+document
+    .querySelector("#companySearch")
+    .addEventListener("keypress", keyPressEvent => {
+        if (keyPressEvent.charCode === 13) {
+            /* WHEN  USER PRESSES ENTER, FIND MATCHING BUSINESS */
+            const foundAgent = businesses.find(
+                foundAgent =>
+                foundAgent.purchasingAgent.nameFirst.includes(keyPressEvent.target.value)||
+                foundAgent.purchasingAgent.nameLast.includes(keyPressEvent.target.value)
+            );
+
+            findEl.innerHTML += `
+                <h2>
+                ${foundAgent.purchasingAgent.nameFirst} ${foundAgent.purchasingAgent.nameLast}
+                </h2>
+                <section>
+                ${foundAgent.companyName}
+                <br>
+                ${foundAgent.phoneWork}
+                </section>
+                
+            `;
+        }
+    });
+
+//reduce
+    businesses.forEach(business => {
+        /* CALCULATE ORDER SUMMARY */
+        let totalOrders = 0
+        business.orders.forEach(order => totalOrders += order)
+    
+    
+        outEl.innerHTML += `
+            <h2>
+                ${business.companyName}
+                ($${totalOrders})
+            </h2>
+            <section>
+                ${business.addressFullStreet}
+            </section>
+            <section>
+                ${business.addressCity},
+                ${business.addressStateCode}
+                ${business.addressZipCode}
+            </section>
+        `;
+        outEl.innerHTML += "<hr/>";
+    });
+
+    /* CALCULATE ORDER SUMMARY */
+let totalOrders = business.orders.reduce(
+    (currentTotal, nextValue) => currentTotal += nextValue,
+    0
+)
