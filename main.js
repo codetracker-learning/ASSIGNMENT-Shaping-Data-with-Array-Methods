@@ -240,6 +240,17 @@ const sentence = words.reduce((firstString, nextString) => firstString+=nextStri
 
 console.log(sentence)
 
+// big spenders
+
+// Array to contain all the big spenders
+const bigSpenders = businesses.filter(business => business.orders.find(spender => spender > 9000));
+    console.log(bigSpenders);
+
+   
+    
+
+
+
 const init = () => {
           
        };
